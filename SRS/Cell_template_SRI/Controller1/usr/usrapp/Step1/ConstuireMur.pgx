@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="ConstuireMur">
+    <Code><![CDATA[begin
+  
+  userPage(sEcran)
+  cls(sEcran)
+  
+  //on va a la position de depart
+   movej(Starting_point, tTool, mNomSpeed)
+  waitEndMove()
+  //on ouvre la pince
+  open(tTool)
+  
+  for i = 0 to 3
+    //on prend le depot ou il y a des pièces en stock
+    while(DepotStock[indiceStock]<1)
+      indiceStock=indiceStock+1
+    endWhile
+    
+    //on vas au dessus de la zone à saisir
+    //pCentrePiece est un tableau qui contient les position au dessus des stocks
+    Real_start=pCentrepiece1[indiceStock]
+    //note:plus z est grand plus le bras sera haut
+    //la on est au dessus 
+    movej(Real_start, tTool, mNomSpeed)
+    waitEndMove()
+    
+    //on vas a la piece on met le 123 pour descendre sinon on est trop haut
+    B = {{Real_start.trsf.x , Real_start.trsf.y, Real_start.trsf.z-180+(DepotStock[indiceStock])*7, Real_start.trsf.rx, Real_start.trsf.ry, Real_start.trsf.rz}, {sfree, efree, wfree}}
+    movel(B, tTool, mNomSpeed)
+    waitEndMove()
+    //on ferme la pince
+    close(tTool)
+    //on revient au dessus
+    movel(Real_start, tTool, mNomSpeed)
+    waitEndMove()
+    
+    //Real_Stop=pCentre_Arrive
+    
+    //on amene la piece au dessus de la position où construire
+    //pCentre_Arrive contient un tableau avec les 6 positions possibles de depots
+    movej(pCentre_Arrive[6], tTool, mNomSpeed)
+    waitEndMove()
+   //on baisse la pince
+    Real_Stop = {{pCentre_Arrive[i].trsf.x , pCentre_Arrive[i].trsf.y, pCentre_Arrive[i].trsf.z-165+nNbEtage*10, pCentre_Arrive[i].trsf.rx, pCentre_Arrive[i].trsf.ry, pCentre_Arrive[i].trsf.rz}, {sfree, efree, wfree}}
+    
+     //on modifi l'angle si necessaire
+     if i >1
+      Real_Stop.trsf.rz=Real_start.trsf.rz+nValeurAngle
+    endIf
+    
+    movel(Real_Stop, tTool, mNomSpeed)
+    waitEndMove()
+    //on ouvre la pince
+    open(tTool)
+    //on relève la pince
+    movel(pCentre_Arrive[6], tTool, mNomSpeed)
+    waitEndMove()
+    DepotStock[indiceStock]=DepotStock[indiceStock]-1
+    if i==1
+      nNbEtage=nNbEtage+1
+    endIf
+  endFor
+  
+  //on retourne à la position de départ
+  movej(Starting_point, tTool, mNomSpeed)
+  waitEndMove()
+ //on ferme la pince
+close(tTool)
+  
+  put(sEcran, "Operation réalisé")
+end]]></Code>
+  </Program>
+</Programs>

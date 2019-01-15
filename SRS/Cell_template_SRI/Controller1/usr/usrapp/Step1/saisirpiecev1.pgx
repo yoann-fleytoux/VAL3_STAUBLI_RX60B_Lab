@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="saisirpiecev1">
+    <Code><![CDATA[begin
+  
+  userPage(sEcran)
+  cls(sEcran)
+  
+  //on va a la position de depart
+   movej(Starting_point, tTool, mNomSpeed)
+  waitEndMove()
+  //on ouvre la pince
+    open(tTool)
+  for i = 0 to 3
+    
+    //on vas au dessus de la zone à saisir
+    Real_start=pCentrepiece1[1]
+    //note:plus z est grand plus le bras sera haut
+    //la on est au dessus 
+    movej(Real_start, tTool, mNomSpeed)
+    waitEndMove()
+    
+    //on vas a la piece on met le 123 pour descendre sinon on est trop haut
+    B = {{Real_start.trsf.x , Real_start.trsf.y, Real_start.trsf.z-180+(DepotStock[1])*7, Real_start.trsf.rx, Real_start.trsf.ry, Real_start.trsf.rz}, {sfree, efree, wfree}}
+    movel(B, tTool, mNomSpeed)
+    waitEndMove()
+    //on ferme la pince
+    close(tTool)
+    //on revient au dessus
+    movel(Real_start, tTool, mNomSpeed)
+    waitEndMove()
+    
+    //Real_Stop=pCentre_Arrive
+    
+    //on amene la piece au dessus de la position où construire
+    movej(pCentre_Arrive[6], tTool, mNomSpeed)
+    waitEndMove()
+   //on baisse la pince
+    Real_Stop = {{pCentre_Arrive[0].trsf.x , pCentre_Arrive[0].trsf.y, pCentre_Arrive[0].trsf.z-165+nNbEtage*7, pCentre_Arrive[0].trsf.rx, pCentre_Arrive[0].trsf.ry, pCentre_Arrive[0].trsf.rz}, {sfree, efree, wfree}}
+    movel(Real_Stop, tTool, mNomSpeed)
+    waitEndMove()
+    //on ouvre la pince
+    open(tTool)
+    //on relève la pince
+    movel(pCentre_Arrive[6], tTool, mNomSpeed)
+    waitEndMove()
+    DepotStock[1]=DepotStock[1]-1
+    nNbEtage=nNbEtage+1
+  endFor
+  
+  //on retourne à la position de départ
+  movej(Starting_point, tTool, mNomSpeed)
+  waitEndMove()
+ //on ferme la pince
+close(tTool)
+  
+  put(sEcran, "Operation réalisé")
+end]]></Code>
+  </Program>
+</Programs>

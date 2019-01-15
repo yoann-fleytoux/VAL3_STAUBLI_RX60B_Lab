@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="test_decoupe">
+    <Code><![CDATA[begin
+  
+  userPage(sEcran)
+  cls(sEcran)
+  //on vas à la position initiale
+
+  movej(Starting_point, tTool, mNomSpeed)
+  waitEndMove()
+  
+  //	demande si point de départ custo
+  putln(sEcran, "Voulez vous changer le point de départ de la découpe : ")
+  putln(sEcran, "   1. Oui")
+  putln(sEcran, "   2. Non")
+  get(sEcran, nYN)
+  //	si oui recuperation
+  if nYN == 1
+    putln(sEcran, "x = ")
+    get(sEcran, nx)
+    
+    putln(sEcran, "y = ")
+    get(sEcran, ny)
+    
+    putln(sEcran, "z = ")
+    get(sEcran, nz)
+    
+    putln(sEcran, "Rx = ")
+    get(sEcran, nRx)
+    
+    putln(sEcran, "Ry = ")
+    get(sEcran, nRy)
+    
+    putln(sEcran, "Rz = ")
+    get(sEcran, nRz)
+    
+    Real_start = {{nx,ny,nz,nRx,nRy,nRz}, {sfree, efree, wfree}}
+  else
+    //	sinon point de depart par defaut
+    Real_start=Starting_point
+  endIf
+  
+  //récupération largeur et hauteur de la découpe:
+  //	demande si dimension custo
+  putln(sEcran, "Voulez vous changer les dimensions de la découpe : ")
+  putln(sEcran, "   1. Oui")
+  putln(sEcran, "   2. Non")
+  get(sEcran, nYN)
+  if nYN == 1
+  //	si oui recuperation
+  putln(sEcran, "")
+  putln(sEcran, "Veuillez entrer les dimensions de votre découpe :")
+  
+  put(sEcran, "Hauteur = ")
+  get(sEcran, Dim_height)
+  put(sEcran, Dim_height)
+  putln(sEcran, "")
+  
+  put(sEcran, "Largeur = ")
+  get(sEcran, Dim_width)
+  put(sEcran, Dim_width)
+  putln(sEcran, "")
+  else
+    //	sinon demension par defaut
+    Dim_height = 5
+    Dim_width = 10
+  endIf
+  
+  //découpe (par defaut on comence en haut à gauche)
+  B = {{Real_start.trsf.x - Dim_height/2, Real_start.trsf.y + Dim_height/2, Real_start.trsf.z, Real_start.trsf.rx, Real_start.trsf.ry, Real_start.trsf.rz}, {sfree, efree, wfree}}
+  C = {{Real_start.trsf.x - Dim_height, Real_start.trsf.y, Real_start.trsf.z, Real_start.trsf.rx, Real_start.trsf.ry, Real_start.trsf.rz}, {sfree, efree, wfree}}
+  D = {{Real_start.trsf.x - Dim_height, Real_start.trsf.y + Dim_width, Real_start.trsf.z, Real_start.trsf.rx, Real_start.trsf.ry, Real_start.trsf.rz}, {sfree, efree, wfree}}
+  E = {{Real_start.trsf.x, Real_start.trsf.y + Dim_width, Real_start.trsf.z, Real_start.trsf.rx, Real_start.trsf.ry, Real_start.trsf.rz}, {sfree, efree, wfree}}
+
+  
+  movel(Real_start, tTool, mNomSpeed)
+  waitEndMove()
+  
+  movec(B,C,tTool, mNomSpeed)
+  waitEndMove()
+  
+  movel(D, tTool, mNomSpeed)
+  waitEndMove()
+  
+  movel(E, tTool, mNomSpeed)
+  waitEndMove()
+  
+  movel(Real_start, tTool, mNomSpeed)
+  waitEndMove()
+  
+  //on vas à la position initiale
+  movej(Starting_point, tTool, mNomSpeed)
+  waitEndMove()
+  
+  put(sEcran, "Operation réalisé")
+end]]></Code>
+  </Program>
+</Programs>

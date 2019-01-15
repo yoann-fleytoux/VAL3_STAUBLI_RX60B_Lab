@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="start">
+    <Code><![CDATA[begin
+   userPage(sEcran)
+  cls(sEcran)
+   putln(sEcran, "Quel programme voulez vous lancer : ")
+  putln(sEcran, "   1. Découpe")
+  putln(sEcran, "   2. Tour de 4 pièces")
+  putln(sEcran, "   3. Constuire tour")
+  get(sEcran, nYN)
+  if nYN == 1
+    call test_decoupe()
+  elseIf nYN==2
+    call saisirpiecev1()
+  elseIf nYN==3
+    call Tour()
+  endIf
+end]]></Code>
+  </Program>
+</Programs>

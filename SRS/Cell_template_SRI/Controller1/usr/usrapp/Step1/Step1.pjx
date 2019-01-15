@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://www.staubli.com/robotics/VAL3/Project/3">
+  <Parameters version="s7.9.1" stackSize="5000" millimeterUnit="true" />
+  <Programs>
+    <Program file="ConstuireMur.pgx" />
+    <Program file="ConstuireSol.pgx" />
+    <Program file="OpenPince_test.pgx" />
+    <Program file="saisirpiecev1.pgx" />
+    <Program file="start.pgx" />
+    <Program file="stop.pgx" />
+    <Program file="test_decoupe.pgx" />
+    <Program file="testDonneCall.pgx" />
+    <Program file="Tour.pgx" />
+  </Programs>
+  <Database>
+    <Data file="Step1.dtx" />
+  </Database>
+  <Libraries />
+</Project>

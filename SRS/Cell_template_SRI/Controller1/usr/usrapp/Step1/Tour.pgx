@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Programs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.staubli.com/robotics/VAL3/Program/2">
+  <Program name="Tour">
+    <Code><![CDATA[begin
+  
+  userPage(sEcran)
+  cls(sEcran)
+  while (DepotStock[0]+DepotStock[1]+DepotStock[2]+DepotStock[3]>3)
+    putln(sEcran, "Voulez vous creer : ")
+    putln(sEcran, "   1. Creer un Mur 4 pieces")
+    putln(sEcran, "   2. Creer un Sol 6 pièces")
+    putln(sEcran, "   3. Modifier l'angle")
+    put(sEcran, "Il reste ")
+    put(sEcran, DepotStock[0]+DepotStock[1]+DepotStock[2]+DepotStock[3])
+    putln(sEcran, " pièces ")
+    get(sEcran, nYN)
+    //pour simplifier on vas vider les dépots 1 par 1
+    if nYN == 1
+      call ConstuireMur()
+    elseIf nYN==2
+      call ConstuireSol()
+    else
+      putln(sEcran, "   Entrer la valeur de l'angle (0 par défaut)")
+      get(sEcran, nValeurAngle)
+    endIf
+    nNbEtage=nNbEtage+1
+  endWhile
+end]]></Code>
+  </Program>
+</Programs>
